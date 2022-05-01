@@ -1,22 +1,28 @@
 import React  from 'react';
 import ReactDOM from 'react-dom';
 import {useState, useEffect} from "react"
-import Gifs from "./components/Gifs"
-const GIFS = ["https://media0.giphy.com/media/88iYsvbegSUn9bSTF8/200w.webp?cid=ecf05e475a4qttl16vjkg7k1vjcsjjo0q1dvlempbphrzvk1&rid=200w.webp&ct=g", 
-"https://media0.giphy.com/media/3oEjHI8WJv4x6UPDB6/200.webp?cid=ecf05e475a4qttl16vjkg7k1vjcsjjo0q1dvlempbphrzvk1&rid=200.webp&ct=g"]
-const DIFFERENT_GIFS = ["https://media.giphy.com/media/6OKqprYYgabclgRBsb/giphy.gif"]
+import getGifs from "./services/getGifs"
+
 const App = () => {
-  const [gifs, setGIF] = useState(GIFS)
+  const [gifs, setGIF] = useState([])
   useEffect(() => {
-    setGIF(DIFFERENT_GIFS)
-  },[])
+      getGifs().then(gifs => setGIF(gifs))
+        
+       }, [])
   return (
     <div className="App">
     <section>
     
     {
       gifs.map((singleGif) => { 
-        return (<img src={singleGif} alt="gif" />) })
+        return (
+          <div id={singleGif.id}>
+          <h4>{singleGif.title}</h4>
+          
+          <img src={singleGif.url} alt="gif" />
+          
+          </div>
+          ) })
     }
     
     </section>
